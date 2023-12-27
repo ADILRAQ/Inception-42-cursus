@@ -1,10 +1,12 @@
 # !/bin/bash
 
-service mariadb start
+# service mariadb start
 
-# mysqld_safe &
+mysqld_safe &
 
 mysqld_safe --skip-grant-tables &
+
+sleep 5
 
 # Create a user
 mysql -e "CREATE USER IF NOT EXISTS ${MARIADB_USER}@localhost IDENTIFIED BY '${MARIADB_PASSWORD}';"
