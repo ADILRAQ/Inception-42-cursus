@@ -1,11 +1,32 @@
 version: '3'
 
+networks:
+  Inception:
+    driver: bridge
+
+# TODO: make a dir
+
+volumes:
+  wordpress:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/araqioui/data/wordpress'
+  database:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/araqioui/data/mariadb'
+
 services:
   mariadb:
     image: mariadb
+    container_name: mariadb
     build: ./requirements/mariadb
-    ports:
-      - 3306:3306
+    expose:
+      - "3306"
     env_file:
       - .env
     volumes:
@@ -16,40 +37,30 @@ services:
 
   wordpress:
     image: wordpress
+    container_name: wordpress
     build: ./requirements/wordpress
-    ports:
-      - 9000:9000
+    expose:
+      - "9000"
     env_file:
       - .env
     depends_on:
-      mariadb:
-        condition: service_started
+      - mariadb
     volumes:
-      - frontVolumes:/var/www/wordpress
+      - wordpress:/var/www/wordpress
     networks:
       - Inception
     restart: always
 
   nginx:
     image: nginx
+    container_name: nginx
     build: ./requirements/nginx
     ports:
       - 443:443
     depends_on:
-      wordpress:
-        condition: service_started
+      - wordpress
     volumes:
-      - frontVolumes:/var/www/html
+      - wordpress:/var/www/html
     networks:
       - Inception
     restart: always
-
-networks:
-  Inception:
-    driver: bridge
-
-volumes:
-  frontVolumes:
-    name: "wp-ng-files"
-  database:
-    name: "mariadb-database"
