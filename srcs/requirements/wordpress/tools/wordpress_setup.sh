@@ -9,7 +9,7 @@ wp config set --allow-root DB_HOST mariadb:3306
 
 wp core install --allow-root --url="araqioui.42.fr" --title="My Wordpress Site" --admin_user=${WP_ADMIN_USER} --admin_password=${WP_ADMIN_PASS} --admin_email=${WP_ADMIN_EMAIL}
 
-wp user create --allow-root ${WP_USER} ${WP_EMAIL} --user_pass=${WP_PASS} --role=author
+wp user create --allow-root "${WP_USER}" "${WP_EMAIL}" --user_pass=${WP_PASS} --role=author
 
 mkdir -p /run/php
 
