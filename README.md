@@ -37,8 +37,8 @@ This project aims to enhance your system administration skills by utilizing Dock
 * __Clone the Repository:__
 
 ```bash
-git clone <repository-url>
-cd <repository-directory>
+git clone git@github.com:ADILRAQ/Inception-42-cursus.git
+cd Inception-42-cursus
 ```
 * __Configure Environment Variables:__
 
